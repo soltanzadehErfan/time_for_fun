@@ -1,25 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'providers/product_provider.dart';
-import 'screens/home_screen.dart';
+import 'core/app.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => ProductProvider()),
-      ],
-      child: const MaterialApp(
-        title: 'Product Carousel',
-        home: HomeScreen(),
-      ),
-    );
-  }
-}
