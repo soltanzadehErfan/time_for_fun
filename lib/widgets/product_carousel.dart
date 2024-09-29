@@ -36,6 +36,7 @@ class ProductCarousel extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ClipRRect(
@@ -47,27 +48,18 @@ class ProductCarousel extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              product.title,
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              'Price: ${product.price}',
-                              style: const TextStyle(
-                                color: Colors.teal,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        product.title,
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'Price: ${product.price}',
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16.0,
                         ),
                       ),
                     ],

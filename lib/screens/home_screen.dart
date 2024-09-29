@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../providers/product_provider.dart';
@@ -25,15 +26,19 @@ class HomeScreen extends StatelessWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Products',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    letterSpacing: 4.0,
-                    fontWeight: FontWeight.bold,
+                Animate(
+                  effects: const [FadeEffect(),MoveEffect()],
+                  delay: const Duration(milliseconds: 200),
+                  child: const Text(
+                    'Products',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      letterSpacing: 6.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 4.0),
                 const Divider(
                   indent: 64.0,
                   endIndent: 64.0,
@@ -42,7 +47,6 @@ class HomeScreen extends StatelessWidget {
                 ProductCarousel(
                   products: provider.products,
                   onProductTap: (product) {
-                    provider.moveToFirst(product);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

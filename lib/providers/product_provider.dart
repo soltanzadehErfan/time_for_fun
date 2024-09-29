@@ -14,21 +14,17 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> fetchProducts() async {
-    final response = await http.get(Uri.parse('https://66e20997c831c8811b57050e.mockapi.io/api/v1/home/items'));
+    final response = await http.get(Uri.parse(
+        'https://66e20997c831c8811b57050e.mockapi.io/api/v1/home/items'));
 
     if (response.statusCode == 200) {
       final List<dynamic> productData = json.decode(response.body);
-      _products = productData.map((json) => ProductModel.fromJson(json)).toList();
+      _products =
+          productData.map((json) => ProductModel.fromJson(json)).toList();
       isLoading = false;
       notifyListeners();
     } else {
       throw Exception('Failed to load products');
     }
-  }
-
-  void moveToFirst(ProductModel product) {
-    _products.remove(product);
-    _products.insert(0, product);
-    notifyListeners();
   }
 }
