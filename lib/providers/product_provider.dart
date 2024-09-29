@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/product_model.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../services/api_service.dart';
 
 class ProductProvider with ChangeNotifier {
   List<ProductModel> _products = [];
@@ -9,22 +8,20 @@ class ProductProvider with ChangeNotifier {
 
   List<ProductModel> get products => _products;
 
+  final ApiService _apiService = ApiService();
+
   ProductProvider() {
     fetchProducts();
   }
 
   Future<void> fetchProducts() async {
-    final response = await http.get(Uri.parse(
-        'https://66e20997c831c8811b57050e.mockapi.io/api/v1/home/items'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> productData = json.decode(response.body);
-      _products =
-          productData.map((json) => ProductModel.fromJson(json)).toList();
+    try {
+      _products = await _apiService.fetchProducts();
       isLoading = false;
-      notifyListeners();
-    } else {
+    } catch (error) {
       throw Exception('Failed to load products');
+    } finally {
+      notifyListeners();
     }
   }
 }
