@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/product_model.dart';
+import '../providers/product_provider.dart';
 
 class ProductCarousel extends StatelessWidget {
   final List<ProductModel> products;
@@ -27,7 +29,12 @@ class ProductCarousel extends StatelessWidget {
         return Builder(
           builder: (BuildContext context) {
             return GestureDetector(
-              onTap: () => onProductTap(product),
+              onTap: () {
+                onProductTap(product);
+                // Set the last tapped product ID in the provider
+                Provider.of<ProductProvider>(context, listen: false)
+                    .setLastTappedProductId(product.id);
+              },
               child: Hero(
                 tag: product.id,
                 child: Card(
