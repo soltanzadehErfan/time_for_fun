@@ -1,34 +1,53 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import '../models/product.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../models/product_model.dart';
+import '../services/api_service.dart';
 
 class ProductProvider with ChangeNotifier {
-  List<Product> _products = [];
+  List<ProductModel> _products = [];
   bool isLoading = true;
 
-  List<Product> get products => _products;
+  List<ProductModel> get products => _products;
+
+  final ApiService _apiService = ApiService();
 
   ProductProvider() {
     fetchProducts();
   }
 
   Future<void> fetchProducts() async {
-    final response = await http.get(Uri.parse('https://66e20997c831c8811b57050e.mockapi.io/api/v1/home/items'));
+    try {
+      _products = await _apiService.fetchProducts();
+      // Shuffle products randomly for initial display
+      _products.shuffle(Random());
 
-    if (response.statusCode == 200) {
-      final List<dynamic> productData = json.decode(response.body);
-      _products = productData.map((json) => Product.fromJson(json)).toList();
+      // Load last tapped product ID from shared preferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? lastTappedProductId = prefs.getString('lastTappedProductId');
+
+      if (lastTappedProductId != null) {
+        // Find the product with the last tapped ID and move it to the front
+        int index = _products.indexWhere((product) => product.id == lastTappedProductId);
+        if (index != -1) {
+          final lastTappedProduct = _products.removeAt(index);
+          _products.insert(0, lastTappedProduct);
+        }
+      }
+
       isLoading = false;
-      notifyListeners();
-    } else {
+    } catch (error) {
+      isLoading = false;
       throw Exception('Failed to load products');
+    } finally {
+      notifyListeners();
     }
   }
 
-  void moveToFirst(Product product) {
-    _products.remove(product);
-    _products.insert(0, product);
-    notifyListeners();
+  void setLastTappedProductId(String productId) async {
+    // Save the last tapped product ID to shared preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('lastTappedProductId', productId);
+    notifyListeners(); // Notify listeners of changes
   }
 }

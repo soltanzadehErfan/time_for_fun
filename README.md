@@ -1,16 +1,29 @@
-# time_for_fun
+# Product Carousel App
 
-A new Flutter project.
+## Overview
+The **time_for_fun** is a Flutter application that showcases a dynamic carousel of products fetched from a mock API. Users can view product details by clicking on an item, enhancing their shopping experience. The app is designed with a focus on performance, usability, and clean code practices.
+
+## Features
+- Displays a carousel of products with images, titles, and prices.
+- Navigation to a detail page for each product.
+- Random sorting of products for fresh display every time.
+- User-friendly interface with smooth animations.
+
+## Technologies Used
+- **Flutter**: Framework for building the application.
+- **Dart**: Programming language used for Flutter development.
+- **Provider**: State management solution for managing the application state.
+- **HTTP**: Package for making network requests to fetch product data.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
+Make sure you have the following installed:
+- Flutter SDK (https://flutter.dev/docs/get-started/install)
+- Dart SDK (comes with Flutter)
+- A code editor (e.g., Visual Studio Code, Android Studio)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/soltanzadehErfan/time_for_fun.git

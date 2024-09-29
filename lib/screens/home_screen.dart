@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../providers/product_provider.dart';
 import '../screens/detail_screen.dart';
@@ -10,29 +12,41 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Products Carousel'),
-        
-      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Consumer<ProductProvider>(
           builder: (context, provider, child) {
             if (provider.isLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const SpinKitFadingCube(
+                color: Colors.blue,
+                duration: Duration(seconds: 1),
+              );
             }
 
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 20),
-                const Text(
-                  'Featured Products',
+                Animate(
+                  effects: const [FadeEffect(),MoveEffect()],
+                  delay: const Duration(milliseconds: 200),
+                  child: const Text(
+                    'Products',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      letterSpacing: 6.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 4.0),
+                const Divider(
+                  indent: 64.0,
+                  endIndent: 64.0,
+                ),
+                const SizedBox(height: 16.0),
                 ProductCarousel(
                   products: provider.products,
                   onProductTap: (product) {
-                    provider.moveToFirst(product);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
