@@ -11,10 +11,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ProductProvider(),
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        darkTheme: ThemeData.dark(),
         title: 'TimeForFunTask',
-        home: HomeScreen(),
+        home: const HomeScreen(),
       ),
     );
   }

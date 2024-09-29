@@ -1,23 +1,27 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import '../models/product_model.dart';
 
 class ProductCarousel extends StatelessWidget {
-  final List<Product> products;
-  final Function(Product) onProductTap;
+  final List<ProductModel> products;
+  final Function(ProductModel) onProductTap;
 
-  const ProductCarousel({super.key, required this.products, required this.onProductTap});
+  const ProductCarousel({
+    super.key,
+    required this.products,
+    required this.onProductTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 400,
+        height: 400.0,
         enlargeCenterPage: true,
         enableInfiniteScroll: false,
         autoPlay: true,
         autoPlayCurve: Curves.easeInOut,
-        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+        autoPlayAnimationDuration: const Duration(seconds: 1),
       ),
       items: products.map((product) {
         return Builder(
@@ -25,17 +29,17 @@ class ProductCarousel extends StatelessWidget {
             return GestureDetector(
               onTap: () => onProductTap(product),
               child: Hero(
-                tag: product.id,  // For smooth transition to detail screen
+                tag: product.id,
                 child: Card(
-                  elevation: 6,
+                  elevation: 8.0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(16.0),
                         child: Image.network(
                           product.image,
                           height: 250,
@@ -45,15 +49,26 @@ class ProductCarousel extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          product.title,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
+                        child: Column(
+                          children: [
+                            Text(
+                              product.title,
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              'Price: ${product.price}',
+                              style: const TextStyle(
+                                color: Colors.teal,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        'Price: ${product.price}',
-                        style: const TextStyle(color: Colors.teal, fontSize: 16),
                       ),
                     ],
                   ),

@@ -1,4 +1,4 @@
-class Product {
+class ProductModel {
   final String id;
   final String title;
   final String image;
@@ -9,7 +9,7 @@ class Product {
   final String rate;
   final String url;
 
-  Product({
+  ProductModel({
     required this.id,
     required this.title,
     required this.image,
@@ -21,8 +21,8 @@ class Product {
     required this.url,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
       id: json['id'],
       title: json['title'],
       image: json['image'],

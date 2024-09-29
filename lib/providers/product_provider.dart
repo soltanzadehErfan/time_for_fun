@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import '../models/product_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ProductProvider with ChangeNotifier {
-  List<Product> _products = [];
+  List<ProductModel> _products = [];
   bool isLoading = true;
 
-  List<Product> get products => _products;
+  List<ProductModel> get products => _products;
 
   ProductProvider() {
     fetchProducts();
@@ -18,7 +18,7 @@ class ProductProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       final List<dynamic> productData = json.decode(response.body);
-      _products = productData.map((json) => Product.fromJson(json)).toList();
+      _products = productData.map((json) => ProductModel.fromJson(json)).toList();
       isLoading = false;
       notifyListeners();
     } else {
@@ -26,7 +26,7 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  void moveToFirst(Product product) {
+  void moveToFirst(ProductModel product) {
     _products.remove(product);
     _products.insert(0, product);
     notifyListeners();

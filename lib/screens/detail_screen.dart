@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import '../models/product_model.dart';
+import '../widgets/info_card.dart';
 
 class DetailScreen extends StatelessWidget {
-  final Product product;
+  final ProductModel product;
 
   const DetailScreen({super.key, required this.product});
 
@@ -10,19 +11,40 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(product.title)),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(product.image),
-            const SizedBox(height: 16),
-            Text('Price: ${product.price}', style: const TextStyle(fontSize: 18)),
-            Text('City: ${product.city}', style: const TextStyle(fontSize: 18)),
-            Text('Presenter: ${product.presenter}', style: const TextStyle(fontSize: 18)),
-            Text('Rate: ${product.rate}', style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 32.0),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: Image.network(
+                product.image,
+                height: 250.0,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 32.0),
+            Row(
+              children: [
+                infoCard('Price', product.price.toString()),
+                infoCard('City', product.city),
+              ],
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                infoCard('Presenter', product.presenter),
+                infoCard('Rate', product.rate.toString()),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
+
+  
 }
